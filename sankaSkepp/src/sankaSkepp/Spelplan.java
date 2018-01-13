@@ -4,8 +4,22 @@ import java.util.Scanner;
 
 
 public class Spelplan {
+	
+	
+	//Använder hämtar koordinater från tangentbordet
+	public static String nyaKoordinater() {
+		String nyKoordinat = "";
+		String siffror = "123456789";
+		String bokstaver = "ABCDEFGHJI";
+		
+		do {Scanner scanner = new Scanner(System.in);
+		nyKoordinat = scanner.toString(); }while ((nyKoordinat.length()==2) || //Använd IndexOf för att kontorllera inputdata
+				
+		return nyKoordinat; //String på formen plats0: siffra, plats1: bokstav
+	}
 
 	public static void main(String[] args) {
+		//Initerar variabler för spelplanen och specifierar att spelplanen ska vara tio gånger tio rutor
 		int kolumn = 10;
 		int rad = 10;
 		int j = 0;
@@ -14,27 +28,22 @@ public class Spelplan {
 		int [][] nySpelplan = new int[kolumn][rad];
 
 
-//Fyller spelplanen med vatten
+		//Fyller spelplanen med vatten
 		for(i = 0; i < rad; i++){
 			for(j = 0; j < kolumn; j++){
 				nySpelplan[i][j] = -1;
 			}
 		}
 	}
-	//Använder hämtar koordinater från tangentbordet
-	public static String nyaKoordinater() {
-		String nyKoordinat = "";
-		
-		do {Scanner scanner = new Scanner(System.in);
-		nyKoordinat = scanner.toString();} while (nyKoordinat.length() == 2);
-				
-		return nyKoordinat;
-	}
+
 
 	
 	//Metoden för att lägga ut båtar på spelplaen
 	public static int [][] placeraFartyg (int [][] nySpelplan) {
 	
+		Scanner scanner = new Scanner(System.in);
+		int j = 0;
+		int i = 0;
 		
 		System.out.println("På vilken rad vill du placera din båt?");
 		i = scanner.nextInt()-1;
@@ -50,6 +59,10 @@ return nySpelplan;
 	public static int [][] skjut (int [][] nySpelplan) {
 		boolean result = false;
 
+		int j = 0;
+		int i = 0;
+		Scanner scanner = new Scanner(System.in);
+		
 		System.out.println("På vilken rad vill du skjuta?");
 		i = scanner.nextInt()-1;
 		System.out.println("På vilken kolumn vill du skjuta?");
@@ -57,6 +70,7 @@ return nySpelplan;
 
 		if(nySpelplan[i][j] == 5) { System.out.println("Träff"); nySpelplan[i][j] = 10;}
 		else if (nySpelplan[i][j] == -1) {System.out.println("Miss"); nySpelplan[i][j] = 7;}
+		return null;
 	}
 
 	
