@@ -12,8 +12,11 @@ public class Spelplan {
 		String siffror = "123456789";
 		String bokstaver = "ABCDEFGHJI";
 		
-		do {Scanner scanner = new Scanner(System.in);
-		nyKoordinat = scanner.toString(); }while ((nyKoordinat.length()==2) || //Använd IndexOf för att kontorllera inputdata
+		do {
+		Scanner scanner = new Scanner(System.in);
+		nyKoordinat = scanner.toString();
+		}
+		while ((nyKoordinat.length()!=2) || ((siffror.indexOf(nyKoordinat.charAt(0))) != -1) || ((bokstaver.indexOf(nyKoordinat.charAt(1))) != -1));
 				
 		return nyKoordinat; //String på formen plats0: siffra, plats1: bokstav
 	}
