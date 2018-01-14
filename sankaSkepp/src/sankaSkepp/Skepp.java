@@ -17,8 +17,8 @@ public class Skepp {
 		return name;
 	}
 	
-	public int getSize() {
-		// TODO Auto-generated method stub
+	public int getSize() 
+	{
 		return size;
 	}
 	

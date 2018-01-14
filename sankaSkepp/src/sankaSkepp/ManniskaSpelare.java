@@ -4,17 +4,17 @@ import java.util.Scanner;
 
 public class ManniskaSpelare {
 	
-	static SpelPlan spelPlan;
-	static SpelPlan traffPlan;
+	static Spelplan spelplan;
+	static Spelplan traffplan;
 	
 	
 	public ManniskaSpelare() {	
-		SpelPlan spelPlan =  new SpelPlan (9,9);
-		SpelPlan traffPlan  =  new SpelPlan (9,9);	
+		Spelplan spelPlan =  new Spelplan (9,9);
+		Spelplan traffPlan  =  new Spelplan (9,9);	
 	}
 	
 	public static void placeraFartyg()
 	{
-		SpelPlan.placeraFartyg();
+		Spelplan.placeraFartyg();
 	}
 }

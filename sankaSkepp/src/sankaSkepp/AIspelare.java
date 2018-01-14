@@ -3,12 +3,12 @@ package sankaSkepp;
 public class AIspelare {
 	
 	
-	SpelPlan spelPlan;
-	SpelPlan traffPlan;
+	static Spelplan spelplan;
+	static Spelplan traffplan;
 	
 	
 	public AIspelare() {
-		SpelPlan spelPlan =  new SpelPlan (9,9);
-		SpelPlan traffPlan  =  new SpelPlan (9,9);	
+		Spelplan spelPlan =  new Spelplan (9,9);
+		Spelplan traffPlan  =  new Spelplan (9,9);	
 	}
 }

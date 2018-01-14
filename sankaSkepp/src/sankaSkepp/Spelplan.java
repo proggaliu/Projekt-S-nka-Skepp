@@ -12,12 +12,12 @@ public class Spelplan {
 	static {
 		allaSkepp = new Skepp[] {
 
-				new Skepp(2,"ubat1"),		
-				new Skepp(2,"ubat2"),
-				new Skepp(2,"ubat3"),
-				new Skepp(3,"jagare1"),
-				new Skepp(3,"jagare2"),
-				new Skepp(4,"superbat"),
+				new Skepp(1,"submarine 1"),		
+				new Skepp(1,"submarine 2"),
+				new Skepp(2,"hunter 1"),
+				new Skepp(2,"hunter 2"),
+				new Skepp(2,"hunter 3"),
+				new Skepp(3,"aircraft carrier"),
 		};
 	}
 
@@ -41,7 +41,7 @@ public class Spelplan {
 		for(Skepp Skepp : allaSkepp)
 		{
 			visaPlanen();
-			System.out.println("Välj var du vill att din " + Skepp.getName() + " ska utgÃ¥ från, tänk på att det måste vara minst en ruta mellan skeppen.");
+			System.out.println("Välj var du vill att din " + Skepp.getName() + " ska utgå från, tänk på att det måste vara minst en ruta mellan skeppen.");
 			placeraFartyg2(Skepp.getSize()); 
 			visaPlanen();
 		}
@@ -56,7 +56,7 @@ public class Spelplan {
 
 		Scanner scan = new Scanner(System.in);
 
-		System.out.println("PÃ¥ vilka koordinater vill du placera din bÃ¥t?");
+		System.out.println("På vilka koordinater vill du placera ditt fartyg?");
 		koordinat = nyaKoordinater();
 		i =  Integer.parseInt(String.valueOf(koordinat.charAt(1))) - 1;
 
@@ -71,31 +71,28 @@ public class Spelplan {
 		if (koordinat.charAt(0) == 'I' || koordinat.charAt(0) == 'i') {j = 8;}
 		if (koordinat.charAt(0) == 'j' || koordinat.charAt(0) == 'j') {j = 9;}
 
-		if (reglerPlaceraBat(i, j)) {
+		if (reglerPlaceraBat(i, j, riktning, sz)) {
 			spelPlanen[i][j] = 5;
 		}
-		else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
+		else {System.out.println("Här får du inte placera ditt fartyg");}
 
-		System.out.println("I vilken riktning vill du placera ditt fartyg?\nTryck 1 fÃ¶r vertikalt eller 2 fÃ¶r horisontalt. " +
-				"TÃ¤nk pÃ¥ att bÃ¥ten mÃ¥ste ligga inom spelplanen och att det mÃ¥ste vara minst en ruta mellan skeppen.");
+		System.out.println("I vilken riktning vill du placera ditt fartyg?\nTryck 1 för syd, 2 för öst, 3 för nord och 4 för väst.\n" +
+				"Tänk på att fartyget måste ligga inom spelplanen och att det måste vara minst en ruta mellan skeppen.");
 
 		riktning = scan.nextInt();
 
 		// Placerar ut skeppet i den riktning som anvÃ¤ndaren skriver in
 		if(riktning == 1 )
-
 		{
 			i++;
 			for(int temp = 0; temp < sz; temp++)
 			{
-
-				if (reglerPlaceraBat(i, j)) {
+				if (reglerPlaceraBat(i, j, riktning, sz)) {
 					spelPlanen[i][j] = 5;
 					i++;
 				}
-				else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
+				else {System.out.println("Här får du inte placera ditt fartyg");}
 			}
-
 		}
 
 
@@ -104,24 +101,79 @@ public class Spelplan {
 			j++;
 			for(int temp = 0; temp < sz; temp++)
 			{
-
-				if (reglerPlaceraBat(i, j)) {
+				if (reglerPlaceraBat(i, j, riktning, sz)) {
 					spelPlanen[i][j] = 5;
 					j++;
 				}
 				else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
 			}
-
 		}
-
+		
+		if(riktning == 3 )
+		{
+			i--;
+			for(int temp = 0; temp < sz; temp++)
+			{
+				if (reglerPlaceraBat(i, j, riktning, sz)) {
+					spelPlanen[i][j] = 5;
+					i--;
+				}
+				else {System.out.println("Här får du inte placera ditt fartyg");}
+			}
+		}
+		
+		if(riktning == 4)
+		{
+			j--;
+			for(int temp = 0; temp < sz; temp++)
+			{
+				if (reglerPlaceraBat(i, j, riktning, sz)) {
+					spelPlanen[i][j] = 5;
+					j--;
+				}
+				else {System.out.println("Här får du inte placera ditt fartyg");}
+			}
+		}
+		
 	}
 
-	public static boolean  reglerPlaceraBat(int i, int j) {
+	public static boolean  reglerPlaceraBat(int i, int j, int riktning, int sz) {
 		boolean platsOk = true;
 
+		//Kontrollerar att det inte redan ligger en båt på rutan
 		if (spelPlanen[i][j]==5){platsOk = false;}
 
-		//TODO: Kontrollera om det ligger nÃ¥gon annan bÃ¥t brevid den vi ska placera ut.
+		int temp1 = j; // j = rad
+		int temp2 = i; // i = kolumn
+		int temp3 = j-2;
+		int temp4 = i-2;
+		
+		//Kontrollerar att det inte ligger en båt precis brevid rutan, denna FUNGERAR INTE ännu
+		switch (riktning) {
+			case 0: //första båtdelen
+				for (; temp1 > temp3; temp3++) {
+					for (; temp2 > temp4; temp4++) {
+						if (spelPlanen[temp4][temp3]==5){platsOk = false;}
+					}
+				}
+				break;
+		
+			case 1://syd
+				for (; temp1 > temp3; temp3++) {
+					for (; temp2 > temp4; temp4++) {
+						if (spelPlanen[temp4][temp3]==5){platsOk = false;}
+						// if undantag beroende på riktning skapa true
+					}
+				}
+				break;
+							
+			case 2://öst
+			
+			case 3://nord
+			
+			case 4://väst
+		
+		}
 
 		return platsOk;
 	}
@@ -136,7 +188,7 @@ public class Spelplan {
 
 		do {
 			Scanner scanner = new Scanner(System.in);
-			System.out.println("Koordinater anges pÃ¥ formen bokstav siffra, utan mellanslag. Detta kan exempelvis vara 'H5'");
+			System.out.println("Koordinater anges på formen bokstav siffra, utan mellanslag. Detta kan exempelvis vara 'H5'");
 			nyKoordinat = scanner.nextLine();
 		}
 		while ((nyKoordinat.length()!=2) || ((siffror.indexOf(nyKoordinat.charAt(1))) == -1) || ((bokstaver.indexOf(nyKoordinat.charAt(0))) == -1));

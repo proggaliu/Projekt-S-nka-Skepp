@@ -8,8 +8,8 @@ public class Main {
 
 		int val = 0;
 
-		System.out.println("VÃ¤lkommen, vill du spela mot en annan person eller datorn?");
-		System.out.println("Tryck 1 fÃ¶r annan spelare, tryck 2 fÃ¶r datorn");	
+		System.out.println("Väkommen, vill du spela mot en annan person eller datorn?");
+		System.out.println("Tryck 1 för annan spelare, tryck 2 för datorn");
 
 		while(val != 1 && val != 2)
 
