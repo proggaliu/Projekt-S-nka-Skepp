@@ -2,82 +2,64 @@ package sankaSkepp;
 
 import java.util.Scanner;
 
-
 public class Spelplan {
-	
-	
-	//TODO: Gör båtar till enheter
-	
-	//TODO: Gör datorspelare
-	
-	//TODO: Fixa spelets gång i main
-	
-	//TODO: Metod för att kontrollera om en hel båt är sänkt
-	
-	//TODO: Metod för att kontrollera om spelet är slut
-	
-	//TODO: Fixa räknare och statistik för spelet
-	
-	
-	//Metod för att hämta koordinater från tangentbordet
-	public static String nyaKoordinater() {
-		String nyKoordinat = "";
-		String siffror = "123456789";
-		String bokstaver = "ABCDEFGHIJabcdefghij";
-		
-		do {	
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Koordinater anges på formen bokstav siffra, utan mellanslag. Detta kan exempelvis vara 'H5'");
-		nyKoordinat = scanner.nextLine();
-		}
-		while ((nyKoordinat.length()!=2) || ((siffror.indexOf(nyKoordinat.charAt(1))) != -1) || ((bokstaver.indexOf(nyKoordinat.charAt(0))) != -1));
-				
-		return nyKoordinat; //String på formen plats0: siffra, plats1: bokstav
+
+	private static int [][] spelPlanen;
+	private int planKolumn;
+	private int planRad;
+	private static Skepp[] allaSkepp;
+
+	static {
+		allaSkepp = new Skepp[] {
+
+				new Skepp(2,"ubat1"),		
+				new Skepp(2,"ubat2"),
+				new Skepp(2,"ubat3"),
+				new Skepp(3,"jagare1"),
+				new Skepp(3,"jagare2"),
+				new Skepp(4,"superbat"),
+		};
 	}
 
-	public static void main(String[] args) {
-		//Initerar variabler för spelplanen och specifierar att spelplanen ska vara tio gånger tio rutor
-		int kolumn = 9;
-		int rad = 9;
-		int j = 0;
-		int i = 0;
+	public Spelplan(int kolumn, int rad) {
 
-		int [][] nySpelplan = new int[kolumn][rad];
+		planKolumn = kolumn;
+		planRad = rad;
 
+		spelPlanen = new int [kolumn][rad];
 
-		//Fyller spelplanen med vatten
-		for(i = 0; i < rad; i++){
-			for(j = 0; j < kolumn; j++){
-				nySpelplan[i][j] = -1;
+		// Fyller spelplanen med vatten
+		for(int i = 0; i < kolumn; i++){
+			for(int j = 0; j < rad; j++){
+				spelPlanen[i][j] = -1;
 			}
 		}
 	}
+	public static void placeraFartyg()
+	{
 
-	
-	//Metod för regler för utplacering av båtar
-	public static boolean reglerPlaceraBat(int [][] nySpelplan, int i, int j) {
-		boolean platsOk = true;
-		
-		
-		//TODO: Kontrollera att det inte redan ligger en båt på platsen
-		//TODO: Kontrollera att det inte ligger en annan båt innom den närmsta rutan
-		
-
-		return platsOk;
+		for(Skepp Skepp : allaSkepp)
+		{
+			visaPlanen();
+			System.out.println("VÃ¤lj vart du vill att din " + Skepp.getName() + "ska utgÃ¥ ifrÃ¥n, tÃ¤nk pÃ¥ att det mÃ¥ste vara minst en ruta mellan skeppen.");
+			placeraFartyg2(Skepp.getSize()); //Hur kommer programmet ihÃ¥g denna koordinat?
+			visaPlanen();
+		}
 	}
 
-	
-	//Metoden för att lägga ut båtar på spelplaen
-	public static int [][] placeraFartyg (int [][] nySpelplan) {
-	
+	public static void  placeraFartyg2(int sz) {
+
 		int j = 0;
 		int i = 0;
+		int riktning = 0;
 		String koordinat = "";
-		
-		System.out.println("På vilka koordinater vill du placera din båt?");
+
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("PÃ¥ vilka koordinater vill du placera din bÃ¥t?");
 		koordinat = nyaKoordinater();
-		j = (int) koordinat.charAt(1) - 1;
-		
+		i =  Integer.parseInt(String.valueOf(koordinat.charAt(1))) - 1;
+
 		if (koordinat.charAt(0) == 'A' || koordinat.charAt(0) == 'a') {j = 0;}
 		if (koordinat.charAt(0) == 'B' || koordinat.charAt(0) == 'b') {j = 1;}
 		if (koordinat.charAt(0) == 'C' || koordinat.charAt(0) == 'c') {j = 2;}
@@ -88,57 +70,128 @@ public class Spelplan {
 		if (koordinat.charAt(0) == 'H' || koordinat.charAt(0) == 'h') {j = 7;}
 		if (koordinat.charAt(0) == 'I' || koordinat.charAt(0) == 'i') {j = 8;}
 		if (koordinat.charAt(0) == 'j' || koordinat.charAt(0) == 'j') {j = 9;}
-		
-		
-		// TODO: mha metoden reglerPlaceraBat kontrollera att det är ok att placera båten
-		nySpelplan[i][j] = 5;
 
-return nySpelplan;
+		if (reglerPlaceraBat(i, j)) {
+			spelPlanen[i][j] = 5;
+		}
+		else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
+
+		System.out.println("I vilken riktning vill du placera ditt fartyg?\nTryck 1 fÃ¶r vertikalt eller 2 fÃ¶r horisontalt. " +
+				"TÃ¤nk pÃ¥ att bÃ¥ten mÃ¥ste ligga inom spelplanen och att det mÃ¥ste vara minst en ruta mellan skeppen.");
+
+		riktning = scan.nextInt();
+
+		// Placerar ut skeppet i den riktning som anvÃ¤ndaren skriver in
+		if(riktning == 1 )
+
+		{
+			i++;
+			for(int temp = 0; temp < sz; temp++)
+			{
+
+				if (reglerPlaceraBat(i, j)) {
+					spelPlanen[i][j] = 5;
+					i++;
+				}
+				else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
+			}
+
+		}
+
+
+		if(riktning == 2)
+		{
+			j++;
+			for(int temp = 0; temp < sz; temp++)
+			{
+
+				if (reglerPlaceraBat(i, j)) {
+					spelPlanen[i][j] = 5;
+					j++;
+				}
+				else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
+			}
+
+		}
 
 	}
-		//Prova att skjuta
+
+	public static boolean  reglerPlaceraBat(int i, int j) {
+		boolean platsOk = true;
+
+		if (spelPlanen[i][j]==5){platsOk = false;}
+
+		//TODO: Kontrollera om det ligger nÃ¥gon annan bÃ¥t brevid den vi ska placera ut.
+
+		return platsOk;
+	}
+
+	//Metod för att hämta koordinater frÃ¥n tangentbordet
+
+	public static String nyaKoordinater() {
+
+		String nyKoordinat = "";
+		String siffror = "123456789";
+		String bokstaver = "ABCDEFGHIJabcdefghij";
+
+		do {
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Koordinater anges pÃ¥ formen bokstav siffra, utan mellanslag. Detta kan exempelvis vara 'H5'");
+			nyKoordinat = scanner.nextLine();
+		}
+		while ((nyKoordinat.length()!=2) || ((siffror.indexOf(nyKoordinat.charAt(1))) == -1) || ((bokstaver.indexOf(nyKoordinat.charAt(0))) == -1));
+
+
+		return nyKoordinat; //String på formen plats0: siffra, plats1: bokstav
+	}
+
+
+
+	//Prova att skjuta
 	public static int [][] skjut (int [][] nySpelplan) {
 		boolean result = false;
 
 		int j = 0;
 		int i = 0;
 		Scanner scanner = new Scanner(System.in);
-		
-		System.out.println("På vilken rad vill du skjuta?");
+
+		System.out.println("PÃ¥ vilken rad vill du skjuta?");
 		i = scanner.nextInt()-1;
-		System.out.println("På vilken kolumn vill du skjuta?");
+		System.out.println("PÃ¥ vilken kolumn vill du skjuta?");
 		j = scanner.nextInt()-1;
 
-		if(nySpelplan[i][j] == 5) { System.out.println("Träff"); nySpelplan[i][j] = 10;}
+		if(nySpelplan[i][j] == 5) { System.out.println("TrÃ¤ff"); nySpelplan[i][j] = 10;}
 		else if (nySpelplan[i][j] == -1) {System.out.println("Miss"); nySpelplan[i][j] = 7;}
 		return null;
 	}
 
-	
-//Metoden som används för att printa spelplanen
-	public static void visaPlanen (int [][] nySpelplan) {
+
+	//Metoden som används för att printa spelplanen
+	public static void visaPlanen () {
+		
 		System.out.print("  A B C D E F G H I");
+		
 		for(int r =0; r < 9; r++)	
 		{ 	
 			System.out.println("");
 			System.out.print((r + 1) + "");
+			
 			for(int c = 0; c < 9; c++)
 			{
-
-				if(nySpelplan[r][c] == -1)
+				if(spelPlanen[r][c] == -1)
 				{
 					System.out.print(" ~");//vatten
 				}
-				else if (nySpelplan[r][c] == 5)
+				else if (spelPlanen[r][c] == 5)
 				{
-					System.out.print(" x");//båt
+					System.out.print(" x");//bÃ¥t
 				}
 
-				else if (nySpelplan[r][c] == 10)
+				else if (spelPlanen[r][c] == 10)
 				{
-					System.out.print(" t");//träff
+					System.out.print(" t");//trÃ¤ff
 				}
-				else if (nySpelplan[r][c] == 7)
+				else if (spelPlanen[r][c] == 7)
 				{
 					System.out.print(" m");//miss
 				}
@@ -147,5 +200,4 @@ return nySpelplan;
 		System.out.println("");
 	}
 }
-
 
