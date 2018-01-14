@@ -6,6 +6,19 @@ import java.util.Scanner;
 public class Spelplan {
 	
 	
+	//TODO: Gör båtar till enheter
+	
+	//TODO: Gör datorspelare
+	
+	//TODO: Fixa spelets gång i main
+	
+	//TODO: Metod för att kontrollera om en hel båt är sänkt
+	
+	//TODO: Metod för att kontrollera om spelet är slut
+	
+	//TODO: Fixa räknare och statistik för spelet
+	
+	
 	//Metod för att hämta koordinater från tangentbordet
 	public static String nyaKoordinater() {
 		String nyKoordinat = "";
@@ -49,9 +62,7 @@ public class Spelplan {
 		//TODO: Kontrollera att det inte redan ligger en båt på platsen
 		//TODO: Kontrollera att det inte ligger en annan båt innom den närmsta rutan
 		
-		
-		
-		
+
 		return platsOk;
 	}
 
@@ -78,6 +89,8 @@ public class Spelplan {
 		if (koordinat.charAt(0) == 'I' || koordinat.charAt(0) == 'i') {j = 8;}
 		if (koordinat.charAt(0) == 'j' || koordinat.charAt(0) == 'j') {j = 9;}
 		
+		
+		// TODO: mha metoden reglerPlaceraBat kontrollera att det är ok att placera båten
 		nySpelplan[i][j] = 5;
 
 return nySpelplan;
