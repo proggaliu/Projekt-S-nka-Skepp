@@ -1,4 +1,4 @@
-//package sankaSkepp;
+package sankaSkepp;
 
 public class Skepp {
 	
