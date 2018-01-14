@@ -41,8 +41,8 @@ public class Spelplan {
 		for(Skepp Skepp : allaSkepp)
 		{
 			visaPlanen();
-			System.out.println("V√§lj vart du vill att din " + Skepp.getName() + "ska utg√• ifr√•n, t√§nk p√• att det m√•ste vara minst en ruta mellan skeppen.");
-			placeraFartyg2(Skepp.getSize()); //Hur kommer programmet ih√•g denna koordinat?
+			System.out.println("V‰lj var du vill att din " + Skepp.getName() + " ska utg√• frÂn, t‰nk pÂ att det mÂste vara minst en ruta mellan skeppen.");
+			placeraFartyg2(Skepp.getSize()); 
 			visaPlanen();
 		}
 	}
