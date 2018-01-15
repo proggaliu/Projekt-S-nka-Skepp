@@ -54,6 +54,7 @@ public class Spelplan {
 		int riktning = 0;
 		String koordinat = "";
 
+
 		Scanner scan = new Scanner(System.in);
 
 		System.out.println("På vilka koordinater vill du placera ditt fartyg?");
@@ -80,61 +81,70 @@ public class Spelplan {
 				"Tänk på att fartyget måste ligga inom spelplanen och att det måste vara minst en ruta mellan skeppen.");
 
 		riktning = scan.nextInt();
-
+		boolean utanförPlan = true;
 		// Placerar ut skeppet i den riktning som anvÃ¤ndaren skriver in
-		if(riktning == 1 )
-		{
-			i++;
-			for(int temp = 0; temp < sz; temp++)
-			{
-				if (reglerPlaceraBat(i, j, riktning, sz)) {
-					spelPlanen[i][j] = 5;
+
+		do {			
+			try {		
+				if(riktning == 1 )
+				{
 					i++;
+					for(int temp = 0; temp < sz; temp++)
+					{
+						if (reglerPlaceraBat(i, j, riktning, sz)) {
+							spelPlanen[i][j] = 5;
+							i++;
+						}
+						else {System.out.println("Här får du inte placera ditt fartyg");}
+					}
 				}
-				else {System.out.println("Här får du inte placera ditt fartyg");}
-			}
-		}
 
 
-		if(riktning == 2)
-		{
-			j++;
-			for(int temp = 0; temp < sz; temp++)
-			{
-				if (reglerPlaceraBat(i, j, riktning, sz)) {
-					spelPlanen[i][j] = 5;
+				if(riktning == 2)
+				{
 					j++;
+					for(int temp = 0; temp < sz; temp++)
+					{
+						if (reglerPlaceraBat(i, j, riktning, sz)) {
+							spelPlanen[i][j] = 5;
+							j++;
+						}
+						else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
+					}
 				}
-				else {System.out.println("HÃ¤r fÃ¥r du inte placera ditt fartyg");}
-			}
-		}
-		
-		if(riktning == 3 )
-		{
-			i--;
-			for(int temp = 0; temp < sz; temp++)
-			{
-				if (reglerPlaceraBat(i, j, riktning, sz)) {
-					spelPlanen[i][j] = 5;
+
+				if(riktning == 3 )
+				{
 					i--;
+					for(int temp = 0; temp < sz; temp++)
+					{
+						if (reglerPlaceraBat(i, j, riktning, sz)) {
+							spelPlanen[i][j] = 5;
+							i--;
+						}
+						else {System.out.println("Här får du inte placera ditt fartyg");}
+					}
 				}
-				else {System.out.println("Här får du inte placera ditt fartyg");}
-			}
-		}
-		
-		if(riktning == 4)
-		{
-			j--;
-			for(int temp = 0; temp < sz; temp++)
-			{
-				if (reglerPlaceraBat(i, j, riktning, sz)) {
-					spelPlanen[i][j] = 5;
+
+				if(riktning == 4)
+				{
 					j--;
+					for(int temp = 0; temp < sz; temp++)
+					{
+						if (reglerPlaceraBat(i, j, riktning, sz)) {
+							spelPlanen[i][j] = 5;
+							j--;
+						}
+						else {System.out.println("Här får du inte placera ditt fartyg");}
+					}
 				}
-				else {System.out.println("Här får du inte placera ditt fartyg");}
+			} catch (Exception ArrayIndexOutOfBoundsException) 
+			{System.out.println("Du får inte placera ditt fartyg utanför spelplanen");
+			utanförPlan = false;
 			}
-		}
-		
+		} while (utanförPlan); {utanförPlan = true;} //TODO: Den fångar undantaget och ger rätt meddelanden, men placerar ändå ut rutor fram till krachen.
+		//Ska denna placeras i reglerPlaceraBat??
+
 	}
 
 	public static boolean  reglerPlaceraBat(int i, int j, int riktning, int sz) {
@@ -149,7 +159,7 @@ public class Spelplan {
 		int temp4 = i-2;
 		
 		//Kontrollerar att det inte ligger en båt precis brevid rutan, denna FUNGERAR INTE ännu
-		switch (riktning) {
+	/*	switch (riktning) {
 			case 0: //första båtdelen
 				for (; temp1 > temp3; temp3++) {
 					for (; temp2 > temp4; temp4++) {
@@ -174,7 +184,7 @@ public class Spelplan {
 			case 4://väst
 		
 		}
-
+*/
 		return platsOk;
 	}
 
